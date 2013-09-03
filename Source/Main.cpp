@@ -37,7 +37,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// render something
 		glColor3f(0.6f, 0.1f, 0.1f);
 
-		glBegin(GL_POLYGON);
+		glBegin(GL_LINE_LOOP);
 		glVertex2f(100.0f, 100.0f);
 		glVertex2f(100.0f, 500.0f);
 		glVertex2f(400.0f, 500.0f);
