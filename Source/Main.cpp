@@ -13,7 +13,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sf::Window window(sf::VideoMode(800, 600), "OpenGL Laboratory", sf::Style::Close);
 
 	// set projection matrix
-	glm::mat4 proj = glm::ortho(0.f, 800.f, 0.f, 600.f);
+	glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(&proj[0][0]);
@@ -31,8 +31,19 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		// clear the window
-		glClearColor(0, 0.2f, 0.4f, 1);
+		glClearColor(0.0f, 0.2f, 0.4f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		// render something
+		glColor3f(0.6f, 0.1f, 0.1f);
+
+		glBegin(GL_POLYGON);
+		glVertex2f(100.0f, 100.0f);
+		glVertex2f(100.0f, 500.0f);
+		glVertex2f(400.0f, 500.0f);
+		glVertex2f(700.0f, 300.0f);
+		glVertex2f(400.0f, 100.0f);
+		glEnd();
 
 		// render
 		window.display();
