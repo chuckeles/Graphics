@@ -1,6 +1,9 @@
 #include <Windows.h>
+
 #include <SFML\Window\Window.hpp>
 #include <SFML\Window\Event.hpp>
+
+#include <gl\GL.h>
 
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -19,7 +22,12 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				looping = false;
 		}
 
+		// clear the window
+		glClearColor(0, 0.2f, 0.4f, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
 
+		// render
+		window.display();
 	}
 
 	return 0;
