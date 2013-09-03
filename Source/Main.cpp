@@ -10,7 +10,7 @@
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	// create window
-	sf::Window window(sf::VideoMode(800, 600), "OpenGL Laboratory");
+	sf::Window window(sf::VideoMode(800, 600), "OpenGL Laboratory", sf::Style::Close);
 
 	// set projection matrix
 	glm::mat4 proj = glm::ortho(0.f, 800.f, 0.f, 600.f);
