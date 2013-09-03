@@ -35,14 +35,18 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// render something
-		glColor3f(0.6f, 0.1f, 0.1f);
+		glBegin(GL_POLYGON);
 
-		glBegin(GL_LINE_LOOP);
+		glColor3f(1.0f, 0.0f, 0.2f);
 		glVertex2f(100.0f, 100.0f);
 		glVertex2f(100.0f, 500.0f);
+		glColor3f(0.2f, 0.0f, 0.8f);
 		glVertex2f(400.0f, 500.0f);
+		glColor3f(0.0f, 0.0f, 1.0f);
 		glVertex2f(700.0f, 300.0f);
+		glColor3f(0.2f, 0.0f, 0.8f);
 		glVertex2f(400.0f, 100.0f);
+
 		glEnd();
 
 		// render
