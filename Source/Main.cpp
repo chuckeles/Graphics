@@ -12,6 +12,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// create window
 	sf::Window window(sf::VideoMode(800, 600), "OpenGL Laboratory", sf::Style::Close);
 
+	// set culling
+	glEnable(GL_CULL_FACE);
+
 	// set projection matrix
 	glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
 
@@ -37,15 +40,12 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// render something
 		glBegin(GL_POLYGON);
 
-		glColor3f(1.0f, 0.0f, 0.2f);
+		glColor3f(0.2f, 0.0f, 0.8f);
 		glVertex2f(100.0f, 100.0f);
-		glVertex2f(100.0f, 500.0f);
-		glColor3f(0.2f, 0.0f, 0.8f);
-		glVertex2f(400.0f, 500.0f);
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex2f(700.0f, 300.0f);
-		glColor3f(0.2f, 0.0f, 0.8f);
 		glVertex2f(400.0f, 100.0f);
+		glVertex2f(700.0f, 300.0f);
+		glVertex2f(400.0f, 500.0f);
+		glVertex2f(100.0f, 500.0f);
 
 		glEnd();
 
