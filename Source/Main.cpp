@@ -57,8 +57,18 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		0, 3, 4
 	};
 
-	glVertexPointer(2, GL_FLOAT, 0, vertexArray);
-	glColorPointer(3, GL_FLOAT, 0, colorArray);
+	// buffers
+	GLuint vertices, colors, indices;
+	glGenBuffers(1, &vertices);
+	glGenBuffers(1, &colors);
+	glGenBuffers(1, &indices);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexArray), vertexArray, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, colors);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(colorArray), colorArray, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexArray), indexArray, GL_STATIC_DRAW);
 
 	// begin loop
 	bool looping = true;
@@ -77,7 +87,14 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// render polygon
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_BYTE, indexArray);
+		glBindBuffer(GL_ARRAY_BUFFER, vertices);
+		glVertexPointer(2, GL_FLOAT, 0, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, colors);
+		glColorPointer(3, GL_FLOAT, 0, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
+		glIndexPointer(GL_UNSIGNED_BYTE, 0, 0);
+
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_BYTE, 0);
 		
 		// swap buffers
 		window.display();
