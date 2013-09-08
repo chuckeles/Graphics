@@ -3,7 +3,8 @@
 #include <SFML\Window\Window.hpp>
 #include <SFML\Window\Event.hpp>
 
-#include <gl\GL.h>
+#include <gl\gl.h>
+#include <gl\glew.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 
@@ -21,6 +22,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(&proj[0][0]);
 
+	// prepare buffers
+	
+
 	// begin loop
 	bool looping = true;
 	while (looping)
@@ -37,19 +41,10 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		glClearColor(0.0f, 0.2f, 0.4f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// render something
-		glBegin(GL_POLYGON);
+		// render buffer objects
+		
 
-		glColor3f(0.2f, 0.0f, 0.8f);
-		glVertex2f(100.0f, 100.0f);
-		glVertex2f(400.0f, 100.0f);
-		glVertex2f(700.0f, 300.0f);
-		glVertex2f(400.0f, 500.0f);
-		glVertex2f(100.0f, 500.0f);
-
-		glEnd();
-
-		// render
+		// swap buffers
 		window.display();
 	}
 
