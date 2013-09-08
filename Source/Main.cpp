@@ -23,6 +23,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// set culling
 	glEnable(GL_CULL_FACE);
 
+	// enable arrays
+	glEnableClientState(GL_VERTEX_ARRAY);
+
 	// set projection matrix
 	glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
 
@@ -30,7 +33,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glLoadMatrixf(&proj[0][0]);
 
 	// arrays
-	GLfloat vertexArray[] = {100.0f, 100.0f, 600.0f, 100.0f, 700.0f, 300.0f, 600.0f, 500.0f, 100.0f, 500.0f};
+	GLfloat vertexArray[] = {100.0f, 100.0f, 500.0f, 100.0f, 700.0f, 300.0f, 500.0f, 500.0f, 100.0f, 500.0f};
+
+	glVertexPointer(2, GL_FLOAT, 0, vertexArray);
 
 	// begin loop
 	bool looping = true;
@@ -49,7 +54,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// render polygon
-		
+		glDrawArrays(GL_POLYGON, 0, 5);
 		
 		// swap buffers
 		window.display();
