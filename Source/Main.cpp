@@ -25,6 +25,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	// enable arrays
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	// set projection matrix
 	glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
@@ -33,9 +34,25 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glLoadMatrixf(&proj[0][0]);
 
 	// arrays
-	GLfloat vertexArray[] = {100.0f, 100.0f, 500.0f, 100.0f, 700.0f, 300.0f, 500.0f, 500.0f, 100.0f, 500.0f};
+	GLfloat vertexArray[] = 
+	{
+		100.0f, 100.0f,
+		500.0f, 100.0f,
+		700.0f, 300.0f,
+		500.0f, 500.0f,
+		100.0f, 500.0f
+	};
+	GLfloat colorArray[] = 
+	{
+		1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f
+	};
 
 	glVertexPointer(2, GL_FLOAT, 0, vertexArray);
+	glColorPointer(3, GL_FLOAT, 0, colorArray);
 
 	// begin loop
 	bool looping = true;
