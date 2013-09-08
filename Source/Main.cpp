@@ -3,8 +3,8 @@
 #include <SFML\Window\Window.hpp>
 #include <SFML\Window\Event.hpp>
 
-#include <gl\gl.h>
 #include <gl\glew.h>
+#include <gl\gl.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 
@@ -12,6 +12,13 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	// create window
 	sf::Window window(sf::VideoMode(800, 600), "OpenGL Laboratory", sf::Style::Close);
+
+	// fire up glew
+	GLenum err = glewInit();
+	if (err != GLEW_OK)
+	{
+		MessageBoxA(0, LPSTR(glewGetErrorString(err)), "GLEW error", MB_ICONWARNING);
+	}
 
 	// set culling
 	glEnable(GL_CULL_FACE);
@@ -22,8 +29,8 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(&proj[0][0]);
 
-	// prepare buffers
-	
+	// arrays
+	GLfloat vertexArray[] = {100.0f, 100.0f, 600.0f, 100.0f, 700.0f, 300.0f, 600.0f, 500.0f, 100.0f, 500.0f};
 
 	// begin loop
 	bool looping = true;
@@ -41,9 +48,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		glClearColor(0.0f, 0.2f, 0.4f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// render buffer objects
+		// render polygon
 		
-
+		
 		// swap buffers
 		window.display();
 	}
