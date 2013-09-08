@@ -34,7 +34,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glLoadMatrixf(&proj[0][0]);
 
 	// arrays
-	GLfloat vertexArray[] = 
+	GLfloat vertexArray[] =
 	{
 		100.0f, 100.0f,
 		500.0f, 100.0f,
@@ -42,13 +42,19 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		500.0f, 500.0f,
 		100.0f, 500.0f
 	};
-	GLfloat colorArray[] = 
+	GLfloat colorArray[] =
 	{
 		1.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f,
 		0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 0.0f
+	};
+	GLubyte indexArray[] =
+	{
+		0, 1, 3,
+		1, 2, 3,
+		0, 3, 4
 	};
 
 	glVertexPointer(2, GL_FLOAT, 0, vertexArray);
@@ -71,7 +77,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// render polygon
-		glDrawArrays(GL_POLYGON, 0, 5);
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_BYTE, indexArray);
 		
 		// swap buffers
 		window.display();
