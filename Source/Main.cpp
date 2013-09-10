@@ -22,25 +22,34 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	// set culling
 	glEnable(GL_CULL_FACE);
-
 	// enable arrays
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 
 	// set projection matrix
-	glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
+	// glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f, 0.1f, 1000.0f);
+	glm::mat4 proj = glm::perspective(80.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(&proj[0][0]);
 
+	// set view matrix
+	// glm::mat4 camera = glm::lookAt(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 0.0f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	// glm::mat4 view = glm::inverse(camera);
+
+	// glMatrixMode(GL_MODELVIEW);
+	// glLoadMatrixf(&view[0][0]);
+
 	// arrays
+	float z = -100.0f;
 	GLfloat vertexArray[] =
 	{
-		100.0f, 100.0f,
-		500.0f, 100.0f,
-		700.0f, 300.0f,
-		500.0f, 500.0f,
-		100.0f, 500.0f
+		-80.0f, -50.0f, z,
+		50.0f, -50.0f, z,
+		80.0f, 0.0f, z,
+		50.0f, 50.0f, z,
+		-80.0f, 50.0f, z
 	};
 	GLfloat colorArray[] =
 	{
@@ -88,7 +97,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		// render polygon
 		glBindBuffer(GL_ARRAY_BUFFER, vertices);
-		glVertexPointer(2, GL_FLOAT, 0, 0);
+		glVertexPointer(3, GL_FLOAT, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, colors);
 		glColorPointer(3, GL_FLOAT, 0, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
