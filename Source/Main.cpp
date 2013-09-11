@@ -34,12 +34,10 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glLoadMatrixf(&proj[0][0]);
 
 	// set view matrix
-	glm::mat4 camera = glm::lookAt(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 0.0f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-	glm::mat4 view = glm::inverse(camera);
+	glm::mat4 camera = glm::lookAt(glm::vec3(50.0f, 20.0f, 0.0f), glm::vec3(0.0f, 0.0f, -100.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(&view[0][0]);
+	glLoadMatrixf(&camera[0][0]);
 
 	// arrays
 	float z = -100.0f;
