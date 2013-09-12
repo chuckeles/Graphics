@@ -27,17 +27,18 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glEnableClientState(GL_COLOR_ARRAY);
 
 	// set projection matrix
-	// glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f, 0.1f, 1000.0f);
 	glm::mat4 proj = glm::perspective(80.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(&proj[0][0]);
 
 	// set view matrix
-	glm::mat4 camera = glm::lookAt(glm::vec3(50.0f, 20.0f, 0.0f), glm::vec3(0.0f, 0.0f, -100.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 camera;
+
+	glm::mat4 view = glm::inverse(camera);
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(&camera[0][0]);
+	glLoadMatrixf(&view[0][0]);
 
 	// arrays
 	float z = -100.0f;
@@ -88,6 +89,19 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
 				looping = false;
 		}
+
+		// get input
+		camera = glm::translate(camera, glm::vec3(
+			(float)sf::Keyboard::isKeyPressed(sf::Keyboard::D) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::A),
+			(float)sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::LControl),
+			(float)sf::Keyboard::isKeyPressed(sf::Keyboard::S) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::W)
+			));
+
+		// move camera
+		view = glm::inverse(camera);
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixf(&view[0][0]);
 
 		// clear the window
 		glClearColor(0.0f, 0.2f, 0.4f, 1.0f);
