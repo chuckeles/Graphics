@@ -41,28 +41,43 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glLoadMatrixf(&view[0][0]);
 
 	// arrays
-	float z = -100.0f;
+	float size = 100.0f;
 	GLfloat vertexArray[] =
 	{
-		-80.0f, -50.0f, z,
-		50.0f, -50.0f, z,
-		80.0f, 0.0f, z,
-		50.0f, 50.0f, z,
-		-80.0f, 50.0f, z
+		-size, -size, -size,
+		-size, -size, size,
+		-size, size, size,
+		-size, size, -size,
+		size, -size, -size,
+		size, -size, size,
+		size, size, size,
+		size, size, -size
 	};
 	GLfloat colorArray[] =
 	{
+		0.0f, 0.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 0.0f
+		1.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f
 	};
 	GLubyte indexArray[] =
 	{
-		0, 1, 3,
-		1, 2, 3,
-		0, 3, 4
+		0, 1, 2,
+		0, 2, 3,
+		4, 6, 5,
+		4, 7, 6,
+		1, 5, 6,
+		1, 6, 2,
+		0, 3, 7,
+		0, 7, 4,
+		0, 4, 5,
+		0, 5, 1,
+		2, 6, 7,
+		2, 7, 3
 	};
 
 	// buffers
@@ -115,7 +130,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
 		glIndexPointer(GL_UNSIGNED_BYTE, 0, 0);
 
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_BYTE, 0);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, 0);
 		
 		// swap buffers
 		window.display();
