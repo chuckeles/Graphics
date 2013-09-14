@@ -32,13 +32,8 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(&proj[0][0]);
 
-	// set view matrix
-	glm::mat4 camera;
-
-	glm::mat4 view = glm::inverse(camera);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(&view[0][0]);
+	// camera
+	glm::mat4 camera = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 100.0f));
 
 	// arrays
 	float size = 100.0f;
@@ -93,6 +88,11 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexArray), indexArray, GL_STATIC_DRAW);
 
+	// set mouse
+	window.setMouseCursorVisible(false);
+	bool mouseSnap = true;
+	sf::Mouse::setPosition(sf::Vector2i(400, 300), window);
+
 	// begin loop
 	bool looping = true;
 	while (looping)
@@ -103,17 +103,38 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		{
 			if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
 				looping = false;
+			if (event.type == sf::Event::LostFocus)
+				mouseSnap = false;
+			if (event.type == sf::Event::GainedFocus)
+				mouseSnap = true;
 		}
 
+		// input settings
+		float moveSpeed = 0.6f;
+		float rotateSpeed = 10.0f;
 		// get input
-		camera = glm::translate(camera, glm::vec3(
-			(float)sf::Keyboard::isKeyPressed(sf::Keyboard::D) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::A),
-			(float)sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::LControl),
-			(float)sf::Keyboard::isKeyPressed(sf::Keyboard::S) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::W)
+		// keyboard
+		glm::mat4 translation = glm::translate(glm::mat4(), glm::vec3(
+			((float)sf::Keyboard::isKeyPressed(sf::Keyboard::D) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::A)) * moveSpeed,
+			((float)sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) * moveSpeed,
+			((float)sf::Keyboard::isKeyPressed(sf::Keyboard::S) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::W)) * moveSpeed
 			));
+		// mouse
+		// delta
+		int dX = sf::Mouse::getPosition(window).x - 400;
+		int dY = sf::Mouse::getPosition(window).y - 300;
+		// reset mouse
+		if (mouseSnap)
+			sf::Mouse::setPosition(sf::Vector2i(400, 300), window);
+		// set rotation
 
-		// move camera
-		view = glm::inverse(camera);
+		// transform
+		glm::mat4 transform = translation;
+		// apply transform
+		camera = camera * transform;
+
+		// set view matrix
+		glm::mat4 view = glm::inverse(camera);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadMatrixf(&view[0][0]);
