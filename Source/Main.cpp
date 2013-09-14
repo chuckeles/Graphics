@@ -7,6 +7,7 @@
 #include <gl\gl.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtc\quaternion.hpp>
 
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -33,7 +34,8 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glLoadMatrixf(&proj[0][0]);
 
 	// camera
-	glm::mat4 camera = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 100.0f));
+	glm::vec3 cameraPosition(0.0f, 200.0f, 300.0f);
+	glm::quat cameraRotation;
 
 	// arrays
 	float size = 100.0f;
@@ -111,27 +113,32 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		// input settings
 		float moveSpeed = 0.6f;
-		float rotateSpeed = 10.0f;
+		float rotateSpeed = 0.01f;
+
 		// get input
-		// keyboard
-		glm::mat4 translation = glm::translate(glm::mat4(), glm::vec3(
-			((float)sf::Keyboard::isKeyPressed(sf::Keyboard::D) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::A)) * moveSpeed,
-			((float)sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) * moveSpeed,
-			((float)sf::Keyboard::isKeyPressed(sf::Keyboard::S) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::W)) * moveSpeed
-			));
-		// mouse
-		// delta
-		int dX = sf::Mouse::getPosition(window).x - 400;
-		int dY = sf::Mouse::getPosition(window).y - 300;
+		float tX = ((float)sf::Keyboard::isKeyPressed(sf::Keyboard::D)      - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::A))        * moveSpeed;
+		float tY = ((float)sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) * moveSpeed;
+		float tZ = ((float)sf::Keyboard::isKeyPressed(sf::Keyboard::S)      - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::W))        * moveSpeed;
+		float rX = -(sf::Mouse::getPosition(window).x - 400) * rotateSpeed;
+		float rY = -(sf::Mouse::getPosition(window).y - 300) * rotateSpeed;
+
+		// translation
+		glm::vec3 translationV(tX, tY, tZ);
+		cameraPosition += cameraRotation * translationV;
+		glm::mat4 translation = glm::translate(glm::mat4(), cameraPosition);
+
+		// rotation
+		glm::quat rotationX(glm::vec3(rY, 0.0f, 0.0f));
+		glm::quat rotationY(glm::vec3(0.0f, rX, 0.0f));
+		cameraRotation = rotationY * cameraRotation * rotationX;
+		glm::mat4 rotation = glm::mat4_cast(cameraRotation);
+
+		// camera matrix
+		glm::mat4 camera = translation * rotation;
+
 		// reset mouse
 		if (mouseSnap)
 			sf::Mouse::setPosition(sf::Vector2i(400, 300), window);
-		// set rotation
-
-		// transform
-		glm::mat4 transform = translation;
-		// apply transform
-		camera = camera * transform;
 
 		// set view matrix
 		glm::mat4 view = glm::inverse(camera);
