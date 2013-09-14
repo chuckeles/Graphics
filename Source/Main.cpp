@@ -28,7 +28,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glEnableClientState(GL_COLOR_ARRAY);
 
 	// set projection matrix
-	glm::mat4 proj = glm::perspective(80.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
+	glm::mat4 proj = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(&proj[0][0]);
