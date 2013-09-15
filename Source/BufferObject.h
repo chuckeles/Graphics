@@ -18,6 +18,8 @@ public:
 		Index
 	};
 
+	BufferObject() = default;
+	~BufferObject();
 
 	// generate buffer object
 	void Create(Type type);

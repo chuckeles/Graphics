@@ -3,6 +3,12 @@
 #include <gl\glew.h>
 #include <gl\gl.h>
 
+BufferObject::~BufferObject()
+{
+	if (mID)
+		Destroy();
+}
+
 void BufferObject::Create(Type type)
 {
 	// set type
