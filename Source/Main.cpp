@@ -9,6 +9,8 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\quaternion.hpp>
 
+#include "BufferObject.h"
+
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	// create window
@@ -78,17 +80,13 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	};
 
 	// buffers
-	GLuint vertices, colors, indices;
-	glGenBuffers(1, &vertices);
-	glGenBuffers(1, &colors);
-	glGenBuffers(1, &indices);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexArray), vertexArray, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, colors);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(colorArray), colorArray, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexArray), indexArray, GL_STATIC_DRAW);
+	BufferObject vertex, color, index;
+	vertex.Create(BufferObject::Type::Vertex);
+	vertex.Copy(sizeof(vertexArray), vertexArray);
+	color.Create(BufferObject::Type::Color);
+	color.Copy(sizeof(colorArray), colorArray);
+	index.Create(BufferObject::Type::Index);
+	index.Copy(sizeof(indexArray), indexArray);
 
 	// set mouse
 	window.setMouseCursorVisible(false);
@@ -112,8 +110,8 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		// input settings
-		float moveSpeed = 0.6f;
-		float rotateSpeed = 0.01f;
+		float moveSpeed = 0.5f;
+		float rotateSpeed = 0.004f;
 
 		// get input
 		float tX = ((float)sf::Keyboard::isKeyPressed(sf::Keyboard::D)      - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::A))        * moveSpeed;
@@ -151,12 +149,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// render polygon
-		glBindBuffer(GL_ARRAY_BUFFER, vertices);
-		glVertexPointer(3, GL_FLOAT, 0, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, colors);
-		glColorPointer(3, GL_FLOAT, 0, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
-		glIndexPointer(GL_UNSIGNED_BYTE, 0, 0);
+		vertex.Bind();
+		color.Bind();
+		index.Bind();
 
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, 0);
 		
