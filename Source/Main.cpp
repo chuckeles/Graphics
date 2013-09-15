@@ -82,7 +82,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glGenBuffers(1, &vertices);
 	glGenBuffers(1, &colors);
 	glGenBuffers(1, &indices);
-
+	
 	glBindBuffer(GL_ARRAY_BUFFER, vertices);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexArray), vertexArray, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, colors);
