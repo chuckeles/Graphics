@@ -121,8 +121,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		float rY = -(sf::Mouse::getPosition(window).y - 300) * rotateSpeed;
 
 		// translation
-		glm::vec3 translationV(tX, tY, tZ);
-		cameraPosition += cameraRotation * translationV;
+		glm::vec3 translationV(tX, 0.0f, tZ);
+		glm::vec3 translationV2(0.0f, tY, 0.0f);
+		cameraPosition += cameraRotation * translationV + translationV2;
 		glm::mat4 translation = glm::translate(glm::mat4(), cameraPosition);
 
 		// rotation
