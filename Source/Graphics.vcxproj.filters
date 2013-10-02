@@ -3,8 +3,10 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="BufferObject.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BufferObject.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
 </Project>

@@ -5,11 +5,10 @@
 
 #include <gl\glew.h>
 #include <gl\gl.h>
-#include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
-#include <glm\gtc\quaternion.hpp>
 
 #include "BufferObject.h"
+#include "Transform.h"
 
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -30,14 +29,11 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glEnableClientState(GL_COLOR_ARRAY);
 
 	// set projection matrix
-	glm::mat4 proj = glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
-
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(&proj[0][0]);
+	glLoadMatrixf(&glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 1000.0f)[0][0]);
 
 	// camera
-	glm::vec3 cameraPosition(0.0f, 200.0f, 300.0f);
-	glm::quat cameraRotation;
+	Transform camera(0.0f, 150.0f, 400.0f);
 
 	// arrays
 	float size = 100.0f;
@@ -121,29 +117,19 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		float rY = -(sf::Mouse::getPosition(window).y - 300) * rotateSpeed;
 
 		// translation
-		glm::vec3 translationV(tX, 0.0f, tZ);
-		glm::vec3 translationV2(0.0f, tY, 0.0f);
-		cameraPosition += cameraRotation * translationV + translationV2;
-		glm::mat4 translation = glm::translate(glm::mat4(), cameraPosition);
-
+		camera.Move(tX, 0.0f, tZ);
+		camera.Move(0.0f, tY, 0.0f, Transform::Space::Global);
 		// rotation
-		glm::quat rotationX(glm::vec3(rY, 0.0f, 0.0f));
-		glm::quat rotationY(glm::vec3(0.0f, rX, 0.0f));
-		cameraRotation = rotationY * cameraRotation * rotationX;
-		glm::mat4 rotation = glm::mat4_cast(cameraRotation);
-
-		// camera matrix
-		glm::mat4 camera = translation * rotation;
+		camera.Rotate(rY, rX, 0.0f);
 
 		// reset mouse
 		if (mouseSnap)
 			sf::Mouse::setPosition(sf::Vector2i(400, 300), window);
 
 		// set view matrix
-		glm::mat4 view = glm::inverse(camera);
 
 		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(&view[0][0]);
+		glLoadMatrixf(&glm::inverse(camera.GetMatrix())[0][0]);
 
 		// clear the window
 		glClearColor(0.0f, 0.2f, 0.4f, 1.0f);
