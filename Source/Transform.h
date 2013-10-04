@@ -18,8 +18,8 @@ public:
 
 	void Move(float x, float y, float z, Space space = Space::Local);
 	void Move(glm::vec3& pos, Space space = Space::Local);
-	void Rotate(float x, float y, float z);
-	void Rotate(glm::vec3& rot);
+	void Rotate(glm::vec3& axis, float angle, Space space = Space::Local);
+	void Rotate(glm::quat& quat, Space space = Space::Local);
 
 	glm::mat4&& GetMatrix() const;
 

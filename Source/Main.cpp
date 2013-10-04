@@ -107,7 +107,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		// input settings
 		float moveSpeed = 0.5f;
-		float rotateSpeed = 0.004f;
+		float rotateSpeed = 0.2f;
 
 		// get input
 		float tX = ((float)sf::Keyboard::isKeyPressed(sf::Keyboard::D)      - (float)sf::Keyboard::isKeyPressed(sf::Keyboard::A))        * moveSpeed;
@@ -120,7 +120,8 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		camera.Move(tX, 0.0f, tZ);
 		camera.Move(0.0f, tY, 0.0f, Transform::Space::Global);
 		// rotation
-		camera.Rotate(rY, rX, 0.0f);
+		camera.Rotate(glm::vec3(1.0f, 0.0f, 0.0f), rY);
+		camera.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), rX, Transform::Space::Global);
 
 		// reset mouse
 		if (mouseSnap)

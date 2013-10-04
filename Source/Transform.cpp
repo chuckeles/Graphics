@@ -19,23 +19,37 @@ void Transform::Move(float x, float y, float z, Space space)
 
 void Transform::Move(glm::vec3& pos, Space space)
 {
-	if (space == Space::Global)
-		mPosition += pos;
-	else
+	switch (space)
+	{
+	case Space::Local:
 		mPosition += mRotation * pos;
+		break;
+
+	case Space::Global:
+		mPosition += pos;
+		break;
+	}
 }
 
-void Transform::Rotate(float x, float y, float z)
+void Transform::Rotate(glm::vec3& axis, float angle, Space space)
 {
-	Rotate(glm::vec3(x, y, z));
+	Rotate(glm::angleAxis(angle, axis), space);
 }
 
-void Transform::Rotate(glm::vec3& rot)
+void Transform::Rotate(glm::quat& quat, Space space)
 {
-	glm::quat rotationX(glm::vec3(rot.x, 0.0f, 0.0f));
-	glm::quat rotationY(glm::vec3(0.0f, rot.y, 0.0f));
+	glm::quat qnorm = glm::normalize(quat);
 
-	mRotation = rotationY * mRotation * rotationX;
+	switch (space)
+	{
+	case Space::Local:
+		mRotation = mRotation * qnorm;
+		break;
+
+	case Space::Global:
+		mRotation = qnorm * mRotation;
+		break;
+	}
 }
 
 glm::mat4&& Transform::GetMatrix() const
