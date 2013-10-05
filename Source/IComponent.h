@@ -11,7 +11,7 @@ __interface IComponent
 
 public:
 
-	virtual const std::string GetType() const = 0;
+	virtual std::string GetType() const = 0;
 	virtual void OnAttach(ActorWeakPtr actor) = 0;
 
 };

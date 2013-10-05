@@ -5,12 +5,12 @@
 #include "Exception.h"
 #include "ActorManager.h"
 
-Actor::Actor(const ActorId id) :
+Actor::Actor(Id id) :
 	mId(id)
 {
 }
 
-const ActorId& Actor::GetId() const
+const Actor::Id& Actor::GetId() const
 {
 	return mId;
 }

@@ -2,24 +2,26 @@
 
 #include <string>
 
+typedef unsigned int uint;
+
 // class storing error information
 class Exception
 {
 
 public:
 
-	Exception(const std::string& error, const std::string& file, int line);
-	Exception(std::string&& error, std::string&& file, int line);
+	Exception(const std::string& error, const std::string& file, uint line);
+	Exception(std::string&& error, std::string&& file, uint line);
 
 	const std::string& GetError() const;
 	const std::string& GetFile() const;
-	const int& GetLine() const;
+	const uint& GetLine() const;
 
 private:
 	
 	const std::string mError;
 	const std::string mFile;
-	const int mLine;
+	const uint mLine = 0;
 
 };
 

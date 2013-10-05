@@ -4,11 +4,18 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="BufferObject.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="ActorManager.cpp" />
+    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="Actor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BufferObject.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="IComponent.h" />
+    <ClInclude Include="ActorManager.h" />
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Pool.h" />
   </ItemGroup>
 </Project>

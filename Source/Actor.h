@@ -6,19 +6,18 @@
 
 #include "IComponent.h"
 
-typedef unsigned long ActorId;
-
 // container for components with assigned id
 class Actor
 {
 
-	typedef std::unordered_map<std::string, ComponentPtr> ComponentMap;
-
 public:
 
-	Actor(const ActorId id);
+	typedef unsigned long Id;
+	typedef std::unordered_map<std::string, ComponentPtr> ComponentMap;
 
-	const ActorId& GetId() const;
+	Actor(Id id);
+
+	const Id& GetId() const;
 
 	void AddComponent(ComponentPtr component);
 	ComponentPtr GetComponent(const std::string& type) const;
@@ -27,7 +26,7 @@ public:
 
 private:
 
-	ActorId mId;
+	Id mId = 0;
 	ComponentMap mComponents;
 
 };

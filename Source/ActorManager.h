@@ -10,7 +10,7 @@ class ActorManager :
 	public Singleton<ActorManager>
 {
 
-	typedef std::unordered_map<ActorId, ActorPtr> ActorMap;
+	typedef std::unordered_map<Actor::Id, ActorPtr> ActorMap;
 	typedef Pool<Actor> ActorPool;
 
 public:
@@ -20,13 +20,13 @@ public:
 	// create new actor or reuse old actor if possible
 	ActorPtr CreateActor();
 	// destroy actor or store it in pool if possible
-	void DestroyActor(ActorId id);
+	void DestroyActor(Actor::Id id);
 
-	ActorPtr GetActor(ActorId id) const;
+	ActorPtr GetActor(Actor::Id id) const;
 
 private:
 
-	ActorId mLastId;
+	Actor::Id mLastId = 0;
 	ActorMap mActors;
 	ActorPool mPool;
 

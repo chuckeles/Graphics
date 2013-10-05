@@ -5,8 +5,7 @@
 SINGLETON_DEF(ActorManager);
 
 ActorManager::ActorManager() :
-	Singleton(this),
-	mLastId(0)
+	Singleton(this)
 {
 }
 
@@ -24,24 +23,24 @@ ActorPtr ActorManager::CreateActor()
 
 	// add to map
 	mActors[actor->GetId()] = actor;
-	return mActors[mLastId];
+	return actor;
 }
 
-void ActorManager::DestroyActor(ActorId id)
+void ActorManager::DestroyActor(Actor::Id id)
 {
 	if (mActors.count(id))
 	{
 		ActorPtr actor = mActors[id];
 		actor->ClearComponents();
 		// move to pool
-		mPool.AddObject(actor);
 		mActors.erase(id);
+		mPool.AddObject(actor);
 	}
 	else
 		THROW_ERROR("Unknown actor id " + id);
 }
 
-ActorPtr ActorManager::GetActor(ActorId id) const
+ActorPtr ActorManager::GetActor(Actor::Id id) const
 {
 	if (mActors.count(id))
 		return mActors.at(id);

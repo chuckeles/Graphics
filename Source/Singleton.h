@@ -11,14 +11,14 @@ public:
 	Singleton(Type* object);
 	~Singleton();
 
+	Singleton(const Singleton<Type>& other) = delete;
+	Singleton(Singleton<Type>&& other) = delete;
+	void operator=(const Singleton<Type>& other) = delete;
+	void operator=(Singleton<Type>&& other) = delete;
+
 	static Type& GetSingleton();
 
 private:
-
-	Singleton(const Singleton<Type>& other);
-	Singleton(Singleton<Type> && other);
-	void operator=(const Singleton<Type>& other);
-	void operator=(Singleton<Type>&& other);
 
 	static Type* msSingleton;
 
