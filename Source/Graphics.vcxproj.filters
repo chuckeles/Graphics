@@ -8,5 +8,7 @@
   <ItemGroup>
     <ClInclude Include="BufferObject.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="IComponent.h" />
   </ItemGroup>
 </Project>

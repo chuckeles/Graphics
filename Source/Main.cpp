@@ -18,9 +18,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// fire up glew
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
-	{
 		MessageBoxA(0, LPSTR(glewGetErrorString(err)), "GLEW error", MB_ICONWARNING);
-	}
 
 	// set culling
 	glEnable(GL_CULL_FACE);
@@ -120,8 +118,11 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		camera.Move(tX, 0.0f, tZ);
 		camera.Move(0.0f, tY, 0.0f, Transform::Space::Global);
 		// rotation
-		camera.Rotate(glm::vec3(1.0f, 0.0f, 0.0f), rY);
-		camera.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), rX, Transform::Space::Global);
+		if (mouseSnap)
+		{
+			camera.Pitch(rY);
+			camera.Yaw(rX, Transform::Space::Global);
+		}
 
 		// reset mouse
 		if (mouseSnap)
@@ -130,7 +131,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// set view matrix
 
 		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(&glm::inverse(camera.GetMatrix())[0][0]);
+		glLoadMatrixf(&camera.GetInverse()[0][0]);
 
 		// clear the window
 		glClearColor(0.0f, 0.2f, 0.4f, 1.0f);

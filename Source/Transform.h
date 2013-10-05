@@ -18,10 +18,15 @@ public:
 
 	void Move(float x, float y, float z, Space space = Space::Local);
 	void Move(glm::vec3& pos, Space space = Space::Local);
+
 	void Rotate(glm::vec3& axis, float angle, Space space = Space::Local);
 	void Rotate(glm::quat& quat, Space space = Space::Local);
+	void Pitch(float angle, Space space = Space::Local);
+	void Yaw(float angle, Space space = Space::Local);
+	void Roll(float angle, Space space = Space::Local);
 
-	glm::mat4&& GetMatrix() const;
+	glm::mat4 GetMatrix() const;
+	glm::mat4 GetInverse() const;
 
 private:
 

@@ -52,10 +52,30 @@ void Transform::Rotate(glm::quat& quat, Space space)
 	}
 }
 
-glm::mat4&& Transform::GetMatrix() const
+void Transform::Pitch(float angle, Space space)
+{
+	Rotate(glm::vec3(1.0f, 0.0f, 0.0f), angle, space);
+}
+
+void Transform::Yaw(float angle, Space space)
+{
+	Rotate(glm::vec3(0.0f, 1.0f, 0.0f), angle, space);
+}
+
+void Transform::Roll(float angle, Space space)
+{
+	Rotate(glm::vec3(0.0f, 0.0f, 1.0f), angle, space);
+}
+
+glm::mat4 Transform::GetMatrix() const
 {
 	glm::mat4 position = glm::translate(glm::mat4(), mPosition);
 	glm::mat4 rotation = glm::mat4_cast(mRotation);
 
 	return position * rotation;
+}
+
+glm::mat4 Transform::GetInverse() const
+{
+	return glm::inverse(GetMatrix());
 }
