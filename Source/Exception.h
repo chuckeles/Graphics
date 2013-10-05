@@ -9,7 +9,7 @@ class Exception
 public:
 
 	Exception(const std::string& error, const std::string& file, int line);
-	Exception(std::string&& error, std::string&& file, int&& line);
+	Exception(std::string&& error, std::string&& file, int line);
 
 	const std::string& GetError() const;
 	const std::string& GetFile() const;

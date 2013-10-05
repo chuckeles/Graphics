@@ -7,9 +7,9 @@ Exception::Exception(const std::string& error, const std::string& file, int line
 {
 }
 
-Exception::Exception(std::string&& error, std::string&& file, int&& line) :
-	mError(std::move(error)),
-	mFile(std::move(file)),
+Exception::Exception(std::string&& error, std::string&& file, int line) :
+	mError(std::forward<std::string>(error)),
+	mFile(std::forward<std::string>(file)),
 	mLine(line)
 {
 }
