@@ -7,6 +7,7 @@
     <ClCompile Include="ActorManager.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="ComponentTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BufferObject.h" />
@@ -17,5 +18,6 @@
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Pool.h" />
+    <ClInclude Include="ComponentTransform.h" />
   </ItemGroup>
 </Project>

@@ -7,11 +7,15 @@
 #include <gl\gl.h>
 #include <glm\gtc\matrix_transform.hpp>
 
+#include "ActorManager.h"
 #include "BufferObject.h"
-#include "Transform.h"
+#include "ComponentTransform.h"
 
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+	// create actor manager
+	ActorManager actorManager;
+
 	// create window
 	sf::Window window(sf::VideoMode(800, 600), "OpenGL Laboratory", sf::Style::Close);
 
@@ -31,7 +35,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	glLoadMatrixf(&glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 1000.0f)[0][0]);
 
 	// camera
-	Transform camera(0.0f, 150.0f, 400.0f);
+	ActorPtr camera = actorManager.CreateActor();
+	ComponentPtr cameraTransform(new ComponentTransform(0.0f, 150.0f, 400.0f));
+	camera->AddComponent(cameraTransform);
 
 	// arrays
 	float size = 100.0f;
@@ -115,13 +121,14 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		float rY = -(sf::Mouse::getPosition(window).y - 300) * rotateSpeed;
 
 		// translation
-		camera.Move(tX, 0.0f, tZ);
-		camera.Move(0.0f, tY, 0.0f, Transform::Space::Global);
+		Transform* transform = static_cast<ComponentTransform*>(cameraTransform.get());
+		transform->Move(tX, 0.0f, tZ);
+		transform->Move(0.0f, tY, 0.0f, Transform::Space::Global);
 		// rotation
 		if (mouseSnap)
 		{
-			camera.Pitch(rY);
-			camera.Yaw(rX, Transform::Space::Global);
+			transform->Pitch(rY);
+			transform->Yaw(rX, Transform::Space::Global);
 		}
 
 		// reset mouse
@@ -131,7 +138,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// set view matrix
 
 		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(&camera.GetInverse()[0][0]);
+		glLoadMatrixf(&transform->GetInverse()[0][0]);
 
 		// clear the window
 		glClearColor(0.0f, 0.2f, 0.4f, 1.0f);
