@@ -19,5 +19,6 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Pool.h" />
     <ClInclude Include="ComponentTransform.h" />
+    <ClInclude Include="Noncopyable.h" />
   </ItemGroup>
 </Project>
