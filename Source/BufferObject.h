@@ -1,8 +1,11 @@
 #pragma once
 
+#include "Noncopyable.h"
+
 typedef unsigned int uint;
 
-class BufferObject
+class BufferObject :
+	public Noncopyable
 {
 
 public:
@@ -19,9 +22,9 @@ public:
 	};
 
 	BufferObject() = default;
+	BufferObject(BufferObject&& other);
 	~BufferObject();
 
-	// generate buffer object
 	void Create(Type type);
 	// copy data to buffer object
 	void Copy(Size size, void* data);
@@ -32,6 +35,8 @@ public:
 
 	const ID& GetID() const;
 	const Type& GetType() const;
+
+	void operator=(BufferObject&& other);
 
 private:
 

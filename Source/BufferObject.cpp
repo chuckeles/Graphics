@@ -3,6 +3,11 @@
 #include <gl\glew.h>
 #include <gl\gl.h>
 
+BufferObject::BufferObject(BufferObject&& other)
+{
+	operator=(other);
+}
+
 BufferObject::~BufferObject()
 {
 	if (mID)
@@ -72,4 +77,15 @@ const BufferObject::ID& BufferObject::GetID() const
 const BufferObject::Type& BufferObject::GetType() const
 {
 	return mType;
+}
+
+void BufferObject::operator=(BufferObject&& other)
+{
+	// move
+	mType = other.mType;
+	mID = other.mID;
+
+	// reset other
+	other.mType = Type::Vertex;
+	other.mID = 0;
 }
